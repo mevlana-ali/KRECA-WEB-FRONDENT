@@ -203,6 +203,17 @@ const AdminUrunler = () => {
               ))}
 
               <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1.5">Ürün Açıklaması</label>
+                <textarea
+                  value={form.aciklama}
+                  onChange={e => setForm(p => ({ ...p, aciklama: e.target.value }))}
+                  required
+                  rows={3}
+                  className="w-full border border-gray-200 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary resize-none"
+                />
+              </div>
+
+              <div>
   <label className="block text-sm font-medium text-gray-600 mb-1.5">Resim</label>
   <div className="space-y-2">
     {form.resimUrl ? (
