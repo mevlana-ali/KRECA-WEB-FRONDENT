@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Filter, X, Search } from 'lucide-react';
 import { urunler as urunlerApi, kategoriler as kategorilerApi } from '../services/api';
-import UrunKart from '../components/UrunKart';
+import UrunKart from '../Components/UrunKart';
 import SEO from '../Components/SEO';
 
 const Urunler = () => {

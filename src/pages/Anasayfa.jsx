@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Truck, Award, ChevronRight, Activity, HeartPulse, Droplets, Brain, Bone, Eye, Sparkles, Stethoscope } from 'lucide-react';
 import { urunler as urunlerApi } from '../services/api';
-import UrunKart from '../components/UrunKart';
+import UrunKart from '../Components/UrunKart';
 import logo from '../assets/Logo.jpeg';
 import SEO from '../Components/SEO';
 
