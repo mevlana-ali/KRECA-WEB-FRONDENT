@@ -18,8 +18,14 @@ const AdminLogin = () => {
       login(res.data.token);
       toast.success('Giriş başarılı!');
       navigate('/admin');
-    } catch {
-      toast.error('Kullanıcı adı veya şifre hatalı!');
+    } catch (err) {
+      if (!err.response) {
+        toast.error('Sunucuya (API) bağlanılamadı. Backend çalışmıyor olabilir.');
+      } else if (err.response.status === 401 || err.response.status === 400) {
+        toast.error('Kullanıcı adı veya şifre hatalı!');
+      } else {
+        toast.error('Bir hata oluştu: ' + err.message);
+      }
     } finally {
       setYukleniyor(false);
     }
