@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Navbar from './Components/Navbar';
+import Footer from './Components/Footer';
 import Anasayfa from './pages/Anasayfa';
 import Urunler from './pages/Urunler';
 import UrunDetay from './pages/UrunDetay';
@@ -15,9 +15,9 @@ import IadePolitikasi from './pages/IadePolitikasi';
 import SatisSozlesmesi from './pages/SatisSozlesmesi';
 import GizlilikPolitikasi from './pages/GizlilikPolitikasi';
 import NotFound from './pages/NotFound';
-import AdminLogin from './pages/admin/AdminLogin';
-import AdminPanel from './pages/admin/AdminPanel';
-import ProtectedRoute from './components/ProtectedRoute';
+import AdminLogin from './pages/Admin/AdminLogin';
+import AdminPanel from './pages/Admin/AdminPanel';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 function App() {
   return (
