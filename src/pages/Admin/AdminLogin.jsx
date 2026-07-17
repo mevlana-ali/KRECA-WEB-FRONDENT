@@ -13,19 +13,22 @@ const AdminLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setYukleniyor(true);
-    
-    // API kontrolü devredışı bırakıldı, direkt React üzerinden statik kontrol yapılıyor
-    setTimeout(() => {
-      if (form.username === 'admin' && form.password === 'kreca2024!') {
-        // Gerçek API kapalı olduğu için sisteme sahte bir token veriyoruz
-        login('gecici-local-admin-token-12345');
-        toast.success('Giriş başarılı!');
-        navigate('/admin');
-      } else {
+    try {
+      const res = await auth.login(form);
+      login(res.data.token);
+      toast.success('Giriş başarılı!');
+      navigate('/admin');
+    } catch (err) {
+      if (!err.response) {
+        toast.error('Sunucuya (API) bağlanılamadı. Backend çalışmıyor olabilir.');
+      } else if (err.response.status === 401 || err.response.status === 400) {
         toast.error('Kullanıcı adı veya şifre hatalı!');
+      } else {
+        toast.error('Bir hata oluştu: ' + err.message);
       }
+    } finally {
       setYukleniyor(false);
-    }, 500); // Gerçekçilik katmak için 500ms bekleme süresi
+    }
   };
 
   return (
