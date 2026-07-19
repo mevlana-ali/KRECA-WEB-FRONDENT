@@ -1,17 +1,18 @@
 import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AdminUrunler from './AdminUrunler';
 import AdminKategoriler from './AdminKategoriler';
 import AdminSiparisler from './AdminSiparisler';
 import AdminAyarlar from './AdminAyarlar';
 import AdminMesajlar from './AdminMesajlar';
-import { LayoutDashboard, Package, Tag, ShoppingBag, Settings, MessageSquare, LogOut } from 'lucide-react';
+import { LayoutDashboard, Package, Tag, ShoppingBag, Settings, MessageSquare, LogOut, Menu, X } from 'lucide-react';
 
 const AdminPanel = () => {
   const { isAdmin, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (!isAdmin) navigate('/yonetim-girisi-kreca');
@@ -32,10 +33,31 @@ const AdminPanel = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
+    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row overflow-hidden">
+      
+      {/* MOBİL HEADER (Hamburger Menu) */}
+      <div className="md:hidden bg-navy text-white flex items-center justify-between p-4 sticky top-0 z-20 shadow-md">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <span className="font-bold text-xs">KR</span>
+          </div>
+          <span className="font-bold">Yönetim Paneli</span>
+        </div>
+        <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="text-white">
+          {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* MOBİL ARKA PLAN KARARTMASI */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
 
       {/* SIDEBAR */}
-      <aside className="w-64 bg-navy text-white flex flex-col shrink-0">
+      <aside className={`fixed md:sticky top-0 left-0 h-screen w-64 bg-navy text-white flex flex-col shrink-0 z-40 transform transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
         <div className="p-6 border-b border-navy-light">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
@@ -57,6 +79,7 @@ const AdminPanel = () => {
               <Link
                 key={to}
                 to={to}
+                onClick={() => setIsSidebarOpen(false)}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                   isActive
                     ? 'bg-primary text-white'
@@ -70,7 +93,7 @@ const AdminPanel = () => {
           })}
         </nav>
 
-        <div className="p-4 border-t border-navy-light">
+        <div className="p-4 border-t border-navy-light mt-auto">
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-navy-light hover:text-white transition-all duration-200 w-full"
@@ -82,10 +105,10 @@ const AdminPanel = () => {
       </aside>
 
       {/* CONTENT */}
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1 overflow-x-hidden overflow-y-auto h-[calc(100vh-64px)] md:h-screen">
         <Routes>
           <Route path="/" element={
-            <div className="p-8">
+            <div className="p-4 md:p-8">
               <h1 className="text-2xl font-bold text-navy mb-6">Dashboard</h1>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[

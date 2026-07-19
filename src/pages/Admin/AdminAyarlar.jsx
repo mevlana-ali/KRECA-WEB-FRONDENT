@@ -52,7 +52,7 @@ const AdminAyarlar = () => {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <h1 className="text-2xl font-bold text-navy mb-6">Site Ayarları</h1>
 
       <form onSubmit={handleSubmit} className="max-w-2xl space-y-8">

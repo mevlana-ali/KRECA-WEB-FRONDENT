@@ -45,7 +45,7 @@ const AdminMesajlar = () => {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-navy">İletişim Mesajları</h1>
@@ -100,7 +100,7 @@ const AdminMesajlar = () => {
           {/* Mesaj Detay */}
           <div className="lg:col-span-2">
             {seciliMesaj ? (
-              <div className="bg-white rounded-xl shadow-sm p-8">
+              <div className="bg-white rounded-xl shadow-sm p-4 md:p-8">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-xl font-bold text-navy">{seciliMesaj.adSoyad}</h2>
                   <span className={`text-xs px-3 py-1 rounded-full font-medium ${
@@ -140,10 +140,10 @@ const AdminMesajlar = () => {
                   </p>
                 </div>
 
-                <div className="mt-6 pt-6 border-t border-gray-100 flex gap-3">
+                <div className="mt-6 pt-6 border-t border-gray-100 flex flex-col sm:flex-row gap-3">
                   <a
                     href={`mailto:${seciliMesaj.email}`}
-                    className="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 text-sm"
+                    className="flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 text-sm"
                   >
                     <Mail size={16} /> E-posta ile Yanıtla
                   </a>
@@ -151,14 +151,14 @@ const AdminMesajlar = () => {
                     href={`https://wa.me/${seciliMesaj.telefon.replace(/\D/g, '')}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 text-sm"
+                    className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 text-sm"
                   >
                     WhatsApp
                   </a>
                 </div>
               </div>
             ) : (
-              <div className="bg-white rounded-xl shadow-sm p-12 text-center">
+              <div className="bg-white rounded-xl shadow-sm p-8 md:p-12 text-center hidden lg:block">
                 <Mail size={48} className="text-gray-200 mx-auto mb-4" />
                 <p className="text-gray-400">Bir mesaj seçin</p>
               </div>

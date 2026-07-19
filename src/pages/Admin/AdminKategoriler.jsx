@@ -43,7 +43,7 @@ const AdminKategoriler = () => {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <h1 className="text-2xl font-bold text-navy mb-8">Kategori Yönetimi</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -84,8 +84,8 @@ const AdminKategoriler = () => {
         </div>
 
         {/* LİSTE */}
-        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm overflow-hidden">
-          <table className="w-full">
+        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm overflow-x-auto w-full">
+          <table className="w-full min-w-[500px]">
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">ID</th>

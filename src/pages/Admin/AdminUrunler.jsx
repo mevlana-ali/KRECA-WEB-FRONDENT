@@ -104,8 +104,8 @@ const AdminUrunler = () => {
   };
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
+    <div className="p-4 md:p-8">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
         <h1 className="text-2xl font-bold text-navy">Ürün Yönetimi</h1>
         <button
           onClick={() => { setForm(boslForm); setDuzenleId(null); setModalAcik(true); }}
@@ -115,8 +115,8 @@ const AdminUrunler = () => {
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        <table className="w-full">
+      <div className="bg-white rounded-xl shadow-sm overflow-x-auto w-full">
+        <table className="w-full min-w-[800px]">
           <thead className="bg-gray-50 border-b border-gray-100">
             <tr>
               <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Ürün</th>
@@ -172,9 +172,9 @@ const AdminUrunler = () => {
       </div>
 
       {modalAcik && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-6 border-b border-gray-100">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto flex flex-col">
+            <div className="flex items-center justify-between p-4 md:p-6 border-b border-gray-100 sticky top-0 bg-white z-10">
               <h2 className="text-xl font-bold text-navy">
                 {duzenleId ? 'Ürün Düzenle' : 'Yeni Ürün Ekle'}
               </h2>

@@ -67,7 +67,7 @@ const AdminSiparisler = () => {
   }));
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <h1 className="text-2xl font-bold text-navy mb-8">Sipariş Yönetimi</h1>
 
       {/* İSTATİSTİK KARTLARI */}
@@ -109,8 +109,8 @@ const AdminSiparisler = () => {
       </div>
 
       {/* TABLO */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        <table className="w-full">
+      <div className="bg-white rounded-xl shadow-sm overflow-x-auto w-full">
+        <table className="w-full min-w-[800px]">
           <thead className="bg-gray-50 border-b border-gray-100">
             <tr>
               <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Sipariş</th>
@@ -180,10 +180,10 @@ const AdminSiparisler = () => {
 
       {/* DETAY MODAL */}
       {seciliSiparis && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto flex flex-col">
 
-            <div className="flex items-center justify-between p-6 border-b border-gray-100">
+            <div className="flex items-center justify-between p-4 md:p-6 border-b border-gray-100 sticky top-0 bg-white z-10">
               <div>
                 <h2 className="text-xl font-bold text-navy">Sipariş #{seciliSiparis.id}</h2>
                 <p className="text-gray-400 text-sm mt-0.5">
@@ -195,7 +195,7 @@ const AdminSiparisler = () => {
               </button>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className="p-4 md:p-6 space-y-6">
 
               {/* MÜŞTERİ VE FATURA BİLGİLERİ */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -273,11 +273,11 @@ const AdminSiparisler = () => {
               {/* DURUM GÜNCELLE */}
               <div>
                 <h3 className="font-semibold text-navy mb-3 flex items-center gap-2">
-                  <span className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center text-primary text-xs">3</span>
+                  <span className="w-6 h-6 bg-primary/10 rounded-full flex shrink-0 items-center justify-center text-primary text-xs">3</span>
                   Durum Güncelle
-                  <span className="text-xs text-gray-400 font-normal">(Müşteriye otomatik e-posta gönderilir)</span>
+                  <span className="text-xs text-gray-400 font-normal hidden sm:inline">(Müşteriye otomatik e-posta gönderilir)</span>
                 </h3>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {durumlar.map(durum => {
                     const Icon = durum.icon;
                     const aktif = durumBul(seciliSiparis.durum).value === durum.value;
