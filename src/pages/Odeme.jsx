@@ -72,8 +72,8 @@ const Odeme = () => {
               src={`https://www.paytr.com/odeme/guvenli/${paytrToken}`}
               id="paytriframe"
               frameBorder="0"
-              scrolling="no"
-              style={{ width: '100%', height: '600px' }}
+              scrolling="yes"
+              style={{ width: '100%', height: '800px', minHeight: '100vh' }}
             />
           </div>
         </div>
