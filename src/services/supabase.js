@@ -18,9 +18,23 @@ export const supabase = createClient(
       fetch: async (url, options) => {
         const token = localStorage.getItem('adminToken');
         if (token) {
-          const headers = new Headers(options?.headers);
-          headers.set('Authorization', `Bearer ${token}`);
-          options.headers = headers;
+          let isValid = false;
+          try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            if (payload.exp * 1000 > Date.now()) {
+              isValid = true;
+            }
+          } catch (e) {
+            // Invalid JWT format
+          }
+
+          if (isValid) {
+            const headers = new Headers(options?.headers);
+            headers.set('Authorization', `Bearer ${token}`);
+            options.headers = headers;
+          } else {
+            localStorage.removeItem('adminToken');
+          }
         }
         return fetch(url, options);
       }
