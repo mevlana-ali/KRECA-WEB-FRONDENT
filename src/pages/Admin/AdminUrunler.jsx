@@ -98,8 +98,12 @@ const AdminUrunler = () => {
       await urunlerApi.sil(id);
       toast.success('Ürün silindi!');
       getirUrunler();
-    } catch {
-      toast.error('Ürün silinemedi.');
+    } catch (err) {
+      if (err?.code === '23503') {
+        toast.error('Bu ürün geçmiş siparişlerde kullanıldığı için silinemez! Lütfen düzenleyerek "Pasif" duruma getirin.');
+      } else {
+        toast.error('Ürün silinemedi: ' + (err?.message || 'Bilinmeyen hata'));
+      }
     }
   };
 
