@@ -5,28 +5,33 @@ import UrunKart from '../Components/UrunKart';
 import SEO from '../Components/SEO';
 
 const Urunler = () => {
-  const [urunler, setUrunler] = useState([]);
+  const [tumUrunler, setTumUrunler] = useState([]);
   const [kategoriler, setKategoriler] = useState([]);
   const [seciliKategori, setSeciliKategori] = useState(null);
   const [yukleniyor, setYukleniyor] = useState(true);
 
   useEffect(() => {
-    kategorilerApi.hepsiniGetir()
-      .then(res => setKategoriler(res.data))
-      .catch(() => setKategoriler([]));
+    const fetchData = async () => {
+      setYukleniyor(true);
+      try {
+        const [katRes, urunRes] = await Promise.all([
+          kategorilerApi.hepsiniGetir(),
+          urunlerApi.hepsiniGetir()
+        ]);
+        setKategoriler(katRes.data || []);
+        setTumUrunler(urunRes.data || []);
+      } catch (error) {
+        console.error("Veri çekme hatası:", error);
+      } finally {
+        setYukleniyor(false);
+      }
+    };
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    setYukleniyor(true);
-    const istek = seciliKategori
-      ? urunlerApi.kategoriIleGetir(seciliKategori)
-      : urunlerApi.hepsiniGetir();
-
-    istek
-      .then(res => setUrunler(res.data))
-      .catch(() => setUrunler([]))
-      .finally(() => setYukleniyor(false));
-  }, [seciliKategori]);
+  const urunler = seciliKategori 
+    ? tumUrunler.filter(u => u.kategoriId === seciliKategori)
+    : tumUrunler;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -60,19 +65,32 @@ const Urunler = () => {
           >
             Tümü
           </button>
-          {kategoriler.map(kat => (
-            <button
-              key={kat.id}
-              onClick={() => setSeciliKategori(kat.id)}
-              className={`px-5 py-2 rounded-full font-medium transition-all duration-200 ${
-                seciliKategori === kat.id
-                  ? 'bg-primary text-white shadow-md'
-                  : 'bg-white text-gray-600 hover:bg-primary/10 hover:text-primary shadow-sm'
-              }`}
-            >
-              {kat.ad}
-            </button>
-          ))}
+          {kategoriler.map(kat => {
+            const urunSayisi = tumUrunler.filter(u => u.kategoriId === kat.id).length;
+            const bosMu = urunSayisi === 0;
+
+            return (
+              <button
+                key={kat.id}
+                onClick={() => !bosMu && setSeciliKategori(kat.id)}
+                disabled={bosMu}
+                className={`relative px-5 py-2 rounded-full font-medium transition-all duration-200 flex items-center gap-2 ${
+                  bosMu 
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200' 
+                    : seciliKategori === kat.id
+                      ? 'bg-primary text-white shadow-md'
+                      : 'bg-white text-gray-600 hover:bg-primary/10 hover:text-primary shadow-sm border border-transparent'
+                }`}
+              >
+                {kat.ad}
+                {bosMu && (
+                  <span className="text-[10px] bg-gray-200 text-gray-500 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                    Çok Yakında
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
 
         {/* ÜRÜN LİSTESİ */}
