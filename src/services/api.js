@@ -173,7 +173,7 @@ export const siparisler = {
     const { data, error } = await supabase
       .from('siparisler')
       .select('*, siparis_detaylar(*, urunler(ad))')
-      .neq('durum', 'Beklemede')
+      .eq('odeme_tamamlandi', true)
       .order('olusturulma_tarihi', { ascending: false });
     if (error) throw error;
     return { data: data.map(formatSiparis) };

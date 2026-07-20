@@ -115,15 +115,23 @@ const UrunDetay = () => {
               <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
                 <button
                   onClick={() => setAdet(prev => Math.max(1, prev - 1))}
-                  className="px-4 py-2 bg-gray-50 hover:bg-gray-100 transition-colors font-bold text-gray-600"
+                  className="px-4 py-2 bg-gray-50 hover:bg-gray-100 transition-colors font-bold text-gray-600 border-r border-gray-200"
                 >
                   -
                 </button>
-                <span className="px-6 py-2 font-semibold text-navy">{adet}</span>
+                <input
+                  type="number"
+                  value={adet}
+                  onChange={(e) => {
+                    const val = parseInt(e.target.value);
+                    if (!isNaN(val) && val > 0 && val <= urun.stokAdedi) setAdet(val);
+                  }}
+                  className="w-20 text-center font-semibold text-navy bg-transparent outline-none focus:bg-gray-50 p-2"
+                />
                 <button
                   onClick={() => setAdet(prev => Math.min(urun.stokAdedi, prev + 1))}
                   disabled={adet >= urun.stokAdedi}
-                  className="px-4 py-2 bg-gray-50 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-bold text-gray-600"
+                  className="px-4 py-2 bg-gray-50 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-bold text-gray-600 border-l border-gray-200"
                 >
                   +
                 </button>

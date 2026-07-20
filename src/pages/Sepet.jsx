@@ -72,14 +72,22 @@ const Sepet = () => {
                 <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
                   <button
                     onClick={() => adetGuncelle(item.id, item.adet - 1)}
-                    className="px-3 py-2 bg-gray-50 hover:bg-gray-100 transition-colors font-bold text-gray-600"
+                    className="px-3 py-2 bg-gray-50 hover:bg-gray-100 transition-colors font-bold text-gray-600 border-r border-gray-200"
                   >
                     -
                   </button>
-                  <span className="px-4 py-2 font-semibold text-navy">{item.adet}</span>
+                  <input
+                    type="number"
+                    value={item.adet}
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value);
+                      if (!isNaN(val) && val > 0) adetGuncelle(item.id, val);
+                    }}
+                    className="w-16 text-center font-semibold text-navy bg-transparent outline-none focus:bg-gray-50 p-2"
+                  />
                   <button
                     onClick={() => adetGuncelle(item.id, item.adet + 1)}
-                    className="px-3 py-2 bg-gray-50 hover:bg-gray-100 transition-colors font-bold text-gray-600"
+                    className="px-3 py-2 bg-gray-50 hover:bg-gray-100 transition-colors font-bold text-gray-600 border-l border-gray-200"
                   >
                     +
                   </button>
