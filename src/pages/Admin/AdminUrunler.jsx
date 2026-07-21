@@ -4,7 +4,7 @@ import { Trash2, Plus, Pencil, X, Check } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const boslForm = {
-  ad: '', aciklama: '', fiyat: '', stokAdedi: '', resimUrl: '', kategoriId: '', aktifMi: true
+  ad: '', aciklama: '', fiyat: '', stokAdedi: '', resimUrl: '', kategoriId: '', aktifMi: true, siraNo: 999
 };
 
 const AdminUrunler = () => {
@@ -17,7 +17,7 @@ const AdminUrunler = () => {
   const [resimYukleniyor, setResimYukleniyor] = useState(false);
 
   const getirUrunler = () => {
-    urunlerApi.hepsiniGetir()
+    urunlerApi.hepsiniGetir() // Admin paneli aktif/pasif hepsini görsün
       .then(res => setUrunler(res.data))
       .catch(() => toast.error('Ürünler yüklenemedi.'));
   };
@@ -38,6 +38,7 @@ const AdminUrunler = () => {
         fiyat: parseFloat(form.fiyat),
         stokAdedi: parseInt(form.stokAdedi),
         kategoriId: parseInt(form.kategoriId),
+        siraNo: parseInt(form.siraNo),
       };
       if (duzenleId) {
         await urunlerApi.guncelle(duzenleId, data);
@@ -87,6 +88,7 @@ const AdminUrunler = () => {
       resimUrl: urun.resimUrl || '',
       kategoriId: urun.kategoriId,
       aktifMi: urun.aktifMi,
+      siraNo: urun.siraNo || 999,
     });
     setDuzenleId(urun.id);
     setModalAcik(true);
@@ -123,6 +125,7 @@ const AdminUrunler = () => {
         <table className="w-full min-w-[800px]">
           <thead className="bg-gray-50 border-b border-gray-100">
             <tr>
+              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Sıra</th>
               <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Ürün</th>
               <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Kategori</th>
               <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Fiyat</th>
@@ -134,6 +137,7 @@ const AdminUrunler = () => {
           <tbody className="divide-y divide-gray-50">
             {urunler.map(urun => (
               <tr key={urun.id} className="hover:bg-gray-50 transition-colors">
+                <td className="px-6 py-4 text-gray-500 font-medium">{urun.siraNo}</td>
                 <td className="px-6 py-4">
                   <p className="font-medium text-navy">{urun.ad}</p>
                   <p className="text-gray-400 text-xs mt-0.5 line-clamp-1">{urun.aciklama}</p>
@@ -168,7 +172,7 @@ const AdminUrunler = () => {
             ))}
             {urunler.length === 0 && (
               <tr>
-                <td colSpan={6} className="text-center py-8 text-gray-400">Henüz ürün eklenmemiş.</td>
+                <td colSpan={7} className="text-center py-8 text-gray-400">Henüz ürün eklenmemiş.</td>
               </tr>
             )}
           </tbody>
@@ -193,6 +197,7 @@ const AdminUrunler = () => {
                 { name: 'ad', label: 'Ürün Adı', type: 'text' },
                 { name: 'fiyat', label: 'Fiyat (₺)', type: 'number' },
                 { name: 'stokAdedi', label: 'Stok Adedi', type: 'number' },
+                { name: 'siraNo', label: 'Sıra No (Küçük sayı önce çıkar)', type: 'number' },
               ].map(({ name, label, type }) => (
                 <div key={name}>
                   <label className="block text-sm font-medium text-gray-600 mb-1.5">{label}</label>

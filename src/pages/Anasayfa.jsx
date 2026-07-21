@@ -11,7 +11,7 @@ const Anasayfa = () => {
   const [yukleniyor, setYukleniyor] = useState(true);
 
   useEffect(() => {
-    urunlerApi.hepsiniGetir()
+    urunlerApi.hepsiniGetir(true)
       .then(res => setUrunler(res.data.slice(0, 4)))
       .catch(() => setUrunler([]))
       .finally(() => setYukleniyor(false));

@@ -6,12 +6,20 @@ import { supabase } from './supabase';
 // ÜRÜNLER — Doğrudan Supabase Client
 // =============================================
 export const urunler = {
-  hepsiniGetir: async () => {
-    const { data, error } = await supabase
+  hepsiniGetir: async (sadeceAktif = false) => {
+    let query = supabase
       .from('urunler')
       .select('*, kategoriler(ad)')
+      .order('sira_no', { ascending: true })
       .order('olusturulma_tarihi', { ascending: false });
+
+    if (sadeceAktif) {
+      query = query.eq('aktif_mi', true);
+    }
+
+    const { data, error } = await query;
     if (error) throw error;
+    
     // Frontend'in beklediği formata dönüştür
     return { data: data.map(u => ({
       id: u.id,
@@ -21,6 +29,7 @@ export const urunler = {
       stokAdedi: u.stok_adedi,
       resimUrl: u.resim_url,
       aktifMi: u.aktif_mi,
+      siraNo: u.sira_no || 999,
       olusturulmaTarihi: u.olusturulma_tarihi,
       kategoriId: u.kategori_id,
       kategoriAd: u.kategoriler?.ad || '',
@@ -42,6 +51,7 @@ export const urunler = {
       stokAdedi: data.stok_adedi,
       resimUrl: data.resim_url,
       aktifMi: data.aktif_mi,
+      siraNo: data.sira_no || 999,
       olusturulmaTarihi: data.olusturulma_tarihi,
       kategoriId: data.kategori_id,
       kategoriAd: data.kategoriler?.ad || '',
@@ -53,6 +63,7 @@ export const urunler = {
       .from('urunler')
       .select('*, kategoriler(ad)')
       .eq('kategori_id', kategoriId)
+      .order('sira_no', { ascending: true })
       .order('olusturulma_tarihi', { ascending: false });
     if (error) throw error;
     return { data: data.map(u => ({
@@ -63,6 +74,7 @@ export const urunler = {
       stokAdedi: u.stok_adedi,
       resimUrl: u.resim_url,
       aktifMi: u.aktif_mi,
+      siraNo: u.sira_no || 999,
       olusturulmaTarihi: u.olusturulma_tarihi,
       kategoriId: u.kategori_id,
       kategoriAd: u.kategoriler?.ad || '',
@@ -80,6 +92,7 @@ export const urunler = {
         resim_url: data.resimUrl,
         kategori_id: data.kategoriId,
         aktif_mi: data.aktifMi ?? true,
+        sira_no: data.siraNo ?? 999,
       })
       .select()
       .single();
@@ -98,6 +111,7 @@ export const urunler = {
         resim_url: data.resimUrl,
         kategori_id: data.kategoriId,
         aktif_mi: data.aktifMi,
+        sira_no: data.siraNo ?? 999,
       })
       .eq('id', id);
     if (error) throw error;

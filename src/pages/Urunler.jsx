@@ -16,7 +16,7 @@ const Urunler = () => {
       try {
         const [katRes, urunRes] = await Promise.all([
           kategorilerApi.hepsiniGetir(),
-          urunlerApi.hepsiniGetir()
+          urunlerApi.hepsiniGetir(true)
         ]);
         setKategoriler(katRes.data || []);
         setTumUrunler(urunRes.data || []);
