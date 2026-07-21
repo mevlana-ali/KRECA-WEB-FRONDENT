@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import ScrollToTop from './Components/ScrollToTop';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
 import Anasayfa from './pages/Anasayfa';
@@ -21,8 +22,10 @@ import ProtectedRoute from './Components/ProtectedRoute';
 
 function App() {
   return (
-    <Routes>
-      {/* Admin rotaları — Navbar/Footer yok */}
+    <>
+      <ScrollToTop />
+      <Routes>
+        {/* Admin rotaları — Navbar/Footer yok */}
       <Route path="/yonetim-girisi-kreca" element={<AdminLogin />} />
       <Route path="/admin/*" element={
         <ProtectedRoute>
@@ -55,7 +58,8 @@ function App() {
           <Footer />
         </div>
       } />
-    </Routes>
+      </Routes>
+    </>
   );
 }
 
